@@ -1,0 +1,8 @@
+{
+  "name": "Amaze GO – Universal Arrow Puzzle Auto Solver",
+  "description": "Android floating assistant and intelligent solver for Amaze GO! arrow puzzles with computer vision, dependency graph solving, manual guide, and auto-tap execution.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
