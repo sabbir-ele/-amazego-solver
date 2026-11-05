@@ -1,0 +1,45 @@
+name: Build Amaze GO Auto Solver APK
+# Official Developer & Creator: MD. SABBIR RAHMAN
+# Project Owner: MD. SABBIR RAHMAN
+# Attribution: Developed by MD. SABBIR RAHMAN
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+  workflow_dispatch: # Allows 1-tap manual build trigger from Android phone in Chrome!
+
+jobs:
+  build:
+    name: Build Signed Android APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle
+
+      - name: Grant Execute Permission to Gradlew
+        run: chmod +x gradlew || true
+
+      - name: Build Debug APK with Gradle
+        run: ./gradlew assembleDebug --no-daemon --stacktrace
+
+      - name: Verify APK Generated
+        run: |
+          echo "Build successful! Verifying APK output:"
+          ls -lh app/build/outputs/apk/debug/
+
+      - name: Upload Signed APK Artifact (Download on Phone)
+        uses: actions/upload-artifact@v4
+        with:
+          name: AmazeGO-AutoSolver-v1.0.0-signed-by-MDSabbirRahman
+          path: app/build/outputs/apk/debug/app-debug.apk
+          retention-days: 30
